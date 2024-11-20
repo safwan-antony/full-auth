@@ -1,0 +1,99 @@
+{%extends 'base.html'%}
+{%block content%}
+{%load static%}
+{% block layout %}
+<content class="block max-w-3xl mx-auto md:p-12">
+    <div class="bg-white rounded-2xl md:drop-shadow-2xl shadow-black w-full p-8">
+        {% if messages %}
+<ul class="messages">
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+        <div>
+    {% for message in messages %}
+   
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+
+    {% endfor %}
+
+</div>
+<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+    </div>
+
+</ul>
+{% endif %}
+ 
+<h1 class="mb-8">Account Settings</h1>
+<form method="POST">
+    {%csrf_token%}
+<table class="w-full text-sm text-left text-gray-500">
+    <tbody>
+        <tr>
+            <th scope="row" class="pt-4 pb-1 text-base font-bold text-gray-900">
+                Email address
+            </th>
+            <td id="email-address" class="pt-4 pb-1 pl-4">
+                {% if user.email %}{{ user.email }}{% else %}No Email{% endif %}
+            </td>
+            <td class="pt-4 pb-1 pl-4">
+                <a id="email-edit" class="cursor-pointer font-medium text-blue-600 hover:underline"
+                    hx-get="{% url 'account_email_change' %}"
+                    hx-target="#email-address"
+                    hx-swap="innerHTML" >
+                    Edit
+                </a>
+            </td>
+        </tr>
+        <tr class="border-b">
+            <th scope="row" class="pb-4 font-medium text-gray-900">  
+            </th>
+            <td class="pb-4 pl-4">
+                {% if user.emailaddress_set.first.verified %}
+                <span class="text-green-500">Verified</span>{% else %}
+                <span class="text-amber-500">Not verified</span>
+                {% endif %}
+            </td>
+            <td class="pb-4 pl-4">
+                {% if not user.emailaddress_set.first.verified %}
+                <button name="send" type="button" class="btn btn-primary">Verify</button>
+                {% endif %}
+                    {% if not user.emailaddress_set.first.verified %}{% endif %}
+                </a>
+            </td>
+        </tr>
+
+        <tr class="border-b">
+            <th scope="row" class="py-4 text-base font-bold text-gray-900">
+                Delete Account
+            </th>
+            <td class="py-4 pl-4">
+                Once deleted, account is gone. Forever.
+            </td>
+            <td class="py-4 pl-4">
+                <a href="{%url 'account_delete_profile' user.id%}" class="font-medium text-red-600 hover:underline">
+                    Delete
+                </a>
+            </td>
+        </tr>
+        <tr class="border-b">
+            <th scope="row"  class="py-4 text-base font-bold text-gray-900">
+                Change Password
+            </th>
+            <td class="py-4 pl-4">
+                are you shure you want to change your password.
+            </td>
+            <td class="py-4 pl-4">
+                <a href="{%url 'change_password'%}" style="color:darkblue;" class="font-medium text-red-600 hover:underline">
+                    Change
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</form>
+
+</div>
+</content>
+{% endblock %}
+
+{%endblock content%}

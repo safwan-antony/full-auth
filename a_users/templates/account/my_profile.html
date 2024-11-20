@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+{%block content%}
+{%load static%}
+
+
+
+
+<div class="max-w-lg mx-auto flex flex-col items-center pt-20 px-4">
+    {%if user.profile_pic%}
+    <img class="w-36 h-36 rounded-full object-cover mb-4" src="{{ user.profile_pic.url }}" />
+    {%else%}
+    <img class="w-36 h-36 rounded-full object-cover mb-4" src="{%static 'avatar.jpg'%}" />
+    {%endif%}
+    <div class="text-center">
+        <h1>{{ user.username }}</h1>
+        <div class="text-gray-400 mb-2 -mt-3">@{{ user.username }}</div>
+        {% if user.about %}
+        <div class="mt-8 hyphens-auto">{{ user.about|linebreaksbr }}</div>
+        {% endif %}  
+    </div>
+</div>
+
+
+
+{%endblock content%}

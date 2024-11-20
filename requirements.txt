@@ -1,0 +1,11 @@
+django
+Django-import-export
+Django-allauth
+Django-filter
+djangorestframework
+six
+pillow
+django-allauth[socialaccount]
+django-htmx
+django-cleanup
+

@@ -1,0 +1,38 @@
+{%extends 'base.html'%}
+{%block content%}
+
+
+{% if messages %}
+<ul class="messages">
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+        <div>
+    {% for message in messages %}
+   
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+
+    {% endfor %}
+
+</div>
+<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+    </div>
+
+</ul>
+{% endif %}
+ 
+<div class="max-w-4xl mx-auto px-8 py-24">
+    <div class="row">
+        <div class="col-md-12">
+
+            <h1>New Project</h1>
+            {%if request.user.is_authenticated%}
+            <h3> hello {{request.user.username}} </h3>
+            {%endif%}
+            <p>devlopped by  <a href="">abderrahmane ibn safouane</a></p>
+        </div>
+    </div>
+</div>
+</div>
+
+{%endblock content%}

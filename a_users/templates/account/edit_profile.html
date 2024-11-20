@@ -1,0 +1,68 @@
+{%extends 'base.html'%}
+{%block content%}
+{%load static%}
+{% block layout %}
+<content class="block max-w-3xl mx-auto md:p-12">
+    <div class="bg-white rounded-2xl md:drop-shadow-2xl shadow-black w-full p-8">
+{% if onboarding %}
+<h1 class="mb-4">Complete your Profile</h1>
+{% else %}
+<h1 class="mb-4">Edit your Profile</h1>
+{% endif %}
+{%if user.profile_pic%}
+
+<div class="text-center flex flex-col items-center">
+    <img id="avatar" class="w-36 h-36 rounded-full object-cover my-4" src="{{ user.profile_pic.url }}" />
+    <div class="text-center max-w-md">
+        <h1 id="displayname">{{ user.displayname|default:"" }}</h1>
+        <div class="text-gray-400 mb-2 -mt-3">@{{ user.username }}</div>
+    </div>
+</div>
+{%else%}
+<div class="text-center flex flex-col items-center">
+    <img id="avatar" class="w-36 h-36 rounded-full object-cover my-4" src="{%static 'avatar.jpg'%}" />
+    <div class="text-center max-w-md">
+        <h1 id="displayname">{{ user.displayname|default:"" }}</h1>
+        <div class="text-gray-400 mb-2 -mt-3">@{{ user.username }}</div>
+    </div>
+</div>
+{%endif%}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" >Submit</button>
+
+</form>
+
+
+
+
+<script>
+    
+    // This updates the avatar
+    const fileInput = document.querySelector('input[type="file"]');
+
+    fileInput.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    const image = document.querySelector('#avatar');
+
+    if (file && file.type.includes('image')) {
+        const url = URL.createObjectURL(file);
+        image.src = url;
+    }
+    });
+
+    // This updates the name
+    const display_nameInput = document.getElementById('id_displayname');
+    const display_nameOutput = document.getElementById('displayname');
+
+    display_nameInput.addEventListener('input', (event) => {
+        display_nameOutput.innerText = event.target.value;
+    });
+
+</script>
+</div>
+</content>
+{% endblock %}
+
+{% endblock %}
